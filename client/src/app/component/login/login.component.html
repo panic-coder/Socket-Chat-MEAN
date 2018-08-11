@@ -1,0 +1,26 @@
+<mat-card class="card">
+  <mat-card-header id="loginName">
+    <div id="loginName">
+      <!-- <mat-card-title>LOGIN</mat-card-title> -->
+      <h3>LOGIN</h3>
+    </div>
+  </mat-card-header>
+  <mat-card-content>
+    <div class="container">
+      <mat-form-field>
+        <input matInput placeholder="Enter your email" [formControl]="email" required>
+        <mat-error *ngIf="email.invalid">{{getErrorMessage()}}</mat-error>
+      </mat-form-field>
+    </div>
+    <div class="container">
+      <mat-form-field>
+        <input matInput placeholder="Enter your password" [type]="hide ? 'password' : 'text'">
+        <mat-icon matSuffix (click)="hide = !hide">{{hide ? 'visibility' : 'visibility_off'}}</mat-icon>
+      </mat-form-field>
+      </div>
+  </mat-card-content>
+  <mat-card-actions>
+    <button mat-button>Sign In</button>
+    <button mat-button>Sign Up</button>
+  </mat-card-actions>
+</mat-card>

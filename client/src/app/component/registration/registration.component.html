@@ -1,0 +1,31 @@
+<mat-card class="card">
+    <mat-card-header id="loginName">
+      <div id="loginName" fxLayoutAlign="center">
+        <!-- <mat-card-title>LOGIN</mat-card-title> -->
+        <h4>REGISTRATION</h4>
+      </div>
+    </mat-card-header>
+    <mat-card-content>
+      <div class="container">
+        <mat-form-field>
+          <input matInput placeholder="Enter your email" name="email" [formControl]="email" required>
+          <mat-error *ngIf="email.invalid">{{getErrorMessage()}}</mat-error>
+        </mat-form-field>
+      </div>
+      <div class="container">
+        <mat-form-field>
+          <input matInput placeholder="Enter your password" name="password" [formControl]="password" type="password" required>
+          <mat-error ng-if="password.invalid">{{getPasswordErrorMessage()}}</mat-error>
+        </mat-form-field>
+        </div>
+        <div class="container">
+        <mat-form-field>
+          <input matInput placeholder="Confirm  password" name="repeatPassword" [formControl]="repeatPassword" type="password" required>
+          <mat-error ng-if="repeatPassword.invalid">{{getPasswordMatch()}}</mat-error>
+        </mat-form-field>
+        </div>
+    </mat-card-content>
+    <div class="button-register" fxLayoutAlign="center">
+        <button mat-button>Register</button>
+    </div>  
+  </mat-card>
