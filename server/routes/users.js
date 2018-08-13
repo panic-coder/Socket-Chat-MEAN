@@ -34,10 +34,11 @@ router.post('/register', (req, res, next) => {
 
 router.post('/login', (req, res) => {
     var id;
+    //var count = 0;
     User.findOne({
         "email": req.body.email
     }, (function (err, doc) {
-
+        //count++;
         if (err) throw err;
         if (doc.password === sha256(req.body.password)) {
             console.log(doc);
@@ -62,8 +63,9 @@ router.post('/login', (req, res) => {
             res.json('Wrong password');
         }
     }))
-
-
+    // if(count == 0){
+    //     res.json('Email not registered')
+    // }
 })
 
 
