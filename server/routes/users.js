@@ -39,28 +39,42 @@ router.post('/login', (req, res) => {
     }, (function (err, doc) {
 
         if (err) throw err;
-        if (doc.password === sha256(req.body.password)) {
-            console.log(doc);
-            //res.json(doc._id);
-            id = {
-                id: doc._id
-            };
+        if(doc != null){
+            if (doc.password === sha256(req.body.password)) {
 
-            //res.json('before token');
-            // var jwt = jwtGen(id);
-            // res.json(jwt);
-            var token = jwt.sign(
-                id, 'secretKey', {
-                    expiresIn: '1h'
+                console.log(doc);
+    
+                //res.json(doc._id);
+                id = {
+                    id: doc._id
+                };
+    
+                //res.json('before token');
+                // var jwt = jwtGen(id);
+                // res.json(jwt);
+                var token = jwt.sign(
+                    id, 'secretKey', {
+                        expiresIn: '1h'
+                    });
+    
+                res.send({
+                    success: true,
+                    token: token
+                })
+            }  else {
+                res.json({
+                    success: false,
+                    reason:'Wrong password'
                 });
+            }
 
-            res.json({
-                success: true,
-                token: token
-            })
         } else {
-            res.json('Wrong password');
-        }
+            res.json({
+                success: false,
+                reason:'Invalid Login'
+            });
+        } 
+
     }))
 
 

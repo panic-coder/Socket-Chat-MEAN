@@ -24,20 +24,3 @@ module.exports.addUser = (newUser, callback) => {
     newUser.password = sha256(newUser.password);
     newUser.save(callback);
 }
-
-
-module.exports.getUserById = (id, callback) => {
-    User.findById(id, callback);
-}
-
-module.exports.getUserByEmail = (email, callback) => {
-    var query = {email: email}
-    User.findOne(query, callback);
-}
-
-module.exports.comparePassword = (userPassword, hash, callback) => {
-    bcrypt.compare(userPassword, hash, (err, match) => {
-        if(err) throw err;
-        callback(null, match);
-    })
-}
