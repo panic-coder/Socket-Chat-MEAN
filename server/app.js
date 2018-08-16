@@ -4,8 +4,8 @@ var app = express();
 var mongoose = require('mongoose');
 var config = require('./config/database');
 var cors = require('cors');
-var http = require('http').Server(app);
-var io = require('socket.io')(http);
+// var http = require('http').Server(app);
+// var io = require('socket.io')(http);
 
 mongoose.connect(config.database, {useNewUrlParser: true});
 var database = mongoose.connection
@@ -34,9 +34,9 @@ var users = require('./routes/users');
 app.use(bodyParser.json());
 app.use('/', users);
 
-app.get('/socket', (req, res) => {
-    res.json('Connected')
-})
+// app.get('/socket', (req, res) => {
+//     res.json('Connected')
+// })
 
 // io.set("log level", 0);
 // io.sockets.on("connection", function (socket) {
@@ -57,4 +57,4 @@ app.get('/socket', (req, res) => {
     
 // })
 
-http.listen(5001, () => console.log('Connected'));
+app.listen(5001, () => console.log('Connected'));

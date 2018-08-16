@@ -18,9 +18,11 @@ var UserSchema = new mongoose.Schema({
         
 }, {collection: 'userInfo'})
 
-var User = module.exports = mongoose.model('user', UserSchema);
+var User = module.exports = mongoose.model('User', UserSchema );
 
 module.exports.addUser = (newUser, callback) => {
+    //console.log(newUser);
+    
     newUser.password = sha256(newUser.password);
     newUser.save(callback);
 }
