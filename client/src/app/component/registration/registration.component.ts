@@ -1,12 +1,7 @@
 import { Component, OnInit, Injectable } from '@angular/core';
 import { FormControl, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
-import { Response } from '@angular/http';   
-import { HttpClient } from '@angular/common/http';
-import { Headers } from '@angular/http';
-import { Observable } from 'rxjs/Observable';  
-import 'rxjs/add/operator/map';  
-import 'rxjs/add/operator/do';
+import { AppService } from '../../app.service';
 
 @Component({
   selector: 'app-registration',
@@ -16,7 +11,7 @@ import 'rxjs/add/operator/do';
 @Injectable()
 export class RegistrationComponent implements OnInit {
 
-  constructor(private router: Router,public http: HttpClient) { }
+  constructor(private router: Router, private service: AppService) { }
 
   ngOnInit() {
   }
@@ -53,11 +48,8 @@ export class RegistrationComponent implements OnInit {
     
     if(password == repeatPassword){
       console.log('Success');
-      var link = 'http://localhost:5001/register';
-      this.http.post(link, user).subscribe(res => console.log('done'));
-      //.map((response: Response) =>response.json())
- 
-       this.router.navigate(['']);
+      this.service.postRequest(user,'register');
+      this.router.navigate(['']);
     } else {
         alert('Failed to match password ')
     }
