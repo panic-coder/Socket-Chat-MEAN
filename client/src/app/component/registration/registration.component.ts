@@ -1,7 +1,7 @@
 import { Component, OnInit, Injectable } from '@angular/core';
 import { FormControl, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
-import { AppService } from '../../app.service';
+import { AppService } from '../../services/app.service';
 
 @Component({
   selector: 'app-registration',
@@ -47,9 +47,17 @@ export class RegistrationComponent implements OnInit {
     console.log(user);
     
     if(password == repeatPassword){
-      console.log('Success');
-      this.service.postRequest(user,'register');
-      this.router.navigate(['']);
+      //console.log('Success');
+      this.service.postRequest(user,'register').subscribe((data:any) => {
+        console.log(data);
+        
+        if(data.success){
+          this.router.navigate(['']);
+        } else {
+          alert('Something went wrong');
+        }
+      })
+      
     } else {
         alert('Failed to match password ')
     }

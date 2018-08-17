@@ -3,7 +3,8 @@ import { Router } from '@angular/router';
 import { Observable } from 'rxjs/Observable';
 import 'rxjs/add/observable/from';
 import 'rxjs/add/operator/map';
- 
+import { AuthService } from '../../auth/auth.service';
+import { ChatService } from '../../services/chat.service';
 
 @Component({
   selector: 'app-chat-dashboard',
@@ -12,13 +13,25 @@ import 'rxjs/add/operator/map';
 })
 export class ChatDashboardComponent implements OnInit {
 
-  constructor(private router: Router) { }
+  message: string;
+
+  constructor(private router: Router, private auth: AuthService, private chatService: ChatService) { }
 
   ngOnInit() {
   }
 
+  sendMessage(){
+    this.chatService.sendMessage(this.message);
+    this.message = '';
+    
+  }
+
   signout(){
-    localStorage.removeItem('token');
+    localStorage.clear();
+    //console.log(localStorage.getItem('token'));
+    var a = this.auth.isAuthenticated();
+    console.log(a);
+    
     this.router.navigate(['']);
   }
 

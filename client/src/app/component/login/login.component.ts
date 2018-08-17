@@ -2,8 +2,9 @@ import { Component, OnInit } from '@angular/core';
 import { FormControl, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import {HttpClient, HttpErrorResponse } from '@angular/common/http';
-import { AppService } from '../../app.service';
+import { AppService } from '../../services/app.service';
 import { error } from 'util';
+import { AuthService } from '../../auth/auth.service';
 
 @Component({
   selector: 'app-login',
@@ -13,7 +14,7 @@ import { error } from 'util';
 export class LoginComponent implements OnInit {
   postdata: string;
   
-  constructor(private router: Router, private service: AppService) {}
+  constructor(private router: Router, private service: AppService, private auth: AuthService) {}
   
   ngOnInit() {}
   
@@ -27,7 +28,7 @@ export class LoginComponent implements OnInit {
     
   }
   
-  dashBoard(email, password) {
+  secureLogin(email, password) {
     var user = {
       "email": email,
       "password": password
@@ -36,10 +37,15 @@ export class LoginComponent implements OnInit {
     this.service.postRequest(user, 'login').subscribe((data: any)  =>  {
       
       localStorage.setItem('token', data.token);
+      //console.log(localStorage.getItem('token'));
+      
+      var a = (this.auth.isAuthenticated());
+      console.log(a);
+      
       if (data != 'undefined') {
         if (data.success) {
-          console.log(data.token);
-          this.router.navigate(['chat-dash']);
+          //console.log(data.token);
+          this.router.navigate(['chatdash']);
         } else {
           alert(data.reason)
         }

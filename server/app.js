@@ -4,8 +4,12 @@ var app = express();
 var mongoose = require('mongoose');
 var config = require('./config/database');
 var cors = require('cors');
-// var http = require('http').Server(app);
-// var io = require('socket.io')(http);
+
+var http = require('http');
+var server = http.Server(app);
+
+var socketIO = require('socket.io');
+var io = socketIO(server);
 
 mongoose.connect(config.database, {useNewUrlParser: true});
 var database = mongoose.connection
@@ -34,27 +38,16 @@ var users = require('./routes/users');
 app.use(bodyParser.json());
 app.use('/', users);
 
-// app.get('/socket', (req, res) => {
-//     res.json('Connected')
-// })
+io.on('connection', function(socket){
+    console.log('a user connected');
+    // socket.on('disconnect', function(){
+    //     console.log('a user disconnected');
+    // })
+    socket.on('new-message', (message) => {
+        console.log(message);
+        io.emit(message);
 
-// io.set("log level", 0);
-// io.sockets.on("connection", function (socket) {
-//     socket.on("echo", function (msg, callback) {
-//         callback = callback || function () {};
- 
-//         socket.emit("echo", msg);
- 
-//         callback(null, "Done.");
-//     });
-// });
+      });
+})
 
-// io.on('connection', function(socket){
-//     console.log('a user connected');
-//     socket.on('disconnect', function(){
-//         console.log('a user disconnected');
-//     })
-    
-// })
-
-app.listen(5001, () => console.log('Connected'));
+server.listen(3000, () => console.log('Connected'));
