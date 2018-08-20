@@ -5,8 +5,25 @@
         <button mat-button (click) = "signout()">Signout</button>
       </mat-toolbar-row>
 </mat-toolbar>
-<input [(ngModel)]="message" />
-<button (click)="sendMessage()">Send</button>
+<!-- <div *ngFor="let email of emails" >
+    {{email}}
+</div> -->
 
+<div *ngFor="let message of messages" >
+     {{message}}
+</div>
 
+<!-- <input [(ngModel)]="message" (keyup)="$event.keyCode == 13 && sendMessage()"/> -->
+<!-- <button (click)="sendMessage()">Send</button> -->
+
+<form class="form" >
+
+    <mat-form-field class="width">
+      <input matInput #message1 maxlength="256" placeholder="Message" [(ngModel)]="message" name="something" [ngModelOptions] = "{staandalone: true}">
+      <!-- <mat-hint align="start"><strong>Don't disclose personal info</strong> </mat-hint> -->
+      <mat-hint align="end">{{message1.value.length}} / 256</mat-hint>
+    </mat-form-field>
+    <button mat-raised-button  (click)="sendMessage()">Send</button>
+
+</form>
 

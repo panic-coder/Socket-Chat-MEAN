@@ -45,13 +45,15 @@ export class AppService {
   postRequest(user,url){
     var reqHeader = new HttpHeaders({'Content-Type': 'application/json'});
     return this.http.post(this.link+url, user, {headers: reqHeader})
-    // .subscribe(
-    //   (data:any) => {
-    //     if(data.length){
-    //       console.log(data);
-          
-    //     }
-    //   }
-    // )
+   
   }
+
+  getRequest(){
+      return this.http.get(this.link+'chatdash');
+  }
+
+  getEmail(){
+    return this.http.get(this.link+'login');
+  }
+
 }

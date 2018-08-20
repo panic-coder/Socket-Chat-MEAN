@@ -10,6 +10,7 @@ var server = http.Server(app);
 
 var socketIO = require('socket.io');
 var io = socketIO(server);
+var chat = require('./model/chat');
 
 mongoose.connect(config.database, {useNewUrlParser: true});
 var database = mongoose.connection
@@ -37,16 +38,19 @@ var users = require('./routes/users');
 
 app.use(bodyParser.json());
 app.use('/', users);
-
+//chat.getTokenValue('eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjViNzY1ZDY5YjRiZGI4MWMzYjIyN2YxNSIsImlhdCI6MTUzNDczOTY3NiwiZXhwIjoxNTM0NzQzMjc2fQ.zDjio6gNgKDGI2bLeo3Ezr_3PWfk1CdFRJbBD_sTwRw');
 io.on('connection', function(socket){
     console.log('a user connected');
     // socket.on('disconnect', function(){
     //     console.log('a user disconnected');
     // })
-    socket.on('new-message', (message) => {
+    socket.on('new-message', (message, token, email) => {
         console.log(message);
-        io.emit(message);
-
+        console.log(token);
+        console.log(email);
+        
+        chat.getTokenValue(token,message);
+        io.emit('new-message',message,email);
       });
 })
 

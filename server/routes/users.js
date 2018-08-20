@@ -1,7 +1,7 @@
 var express = require('express');
 //var app = express();
 var router = express.Router();
-
+var mongoose = require('mongoose');
 var User = require('../model/user');
 var jwt = require('jsonwebtoken');
 var passport = require('passport');
@@ -10,6 +10,9 @@ var sha256 = require('sha256');
 var jwt = require('jsonwebtoken');
 var Promise = require('promise');
 var observer = require('node-observer');
+var chat = require('../model/chat');
+mongoose.connect('mongodb://localhost:27017/chat', {useNewUrlParser: true}); 
+var db = mongoose.connection;
 
 router.post('/register', (req, res, next) => {
     var newUser = new User({
@@ -49,10 +52,6 @@ router.post('/login', (req, res) => {
                 id = {
                     id: doc._id
                 };
-    
-                //res.json('before token');
-                // var jwt = jwtGen(id);
-                // res.json(jwt);
                 var token = jwt.sign(
                     id, 'secretKey', {
                         expiresIn: '1h'
@@ -60,7 +59,8 @@ router.post('/login', (req, res) => {
     
                 res.send({
                     success: true,
-                    token: token
+                    token: token,
+                    email: doc.email
                 })
             }  else {
                 res.json({
@@ -77,12 +77,30 @@ router.post('/login', (req, res) => {
         } 
 
     }))
-    // if(count == 0){
-    //     res.json('Email not registered')
-    // }
 })
 
+router.get("/chatdash", function(req, res, next) {
+    //console.log('get');
+    
+    db.collection("userChat").find({}, function(err, docs) {
+      if(err) return next(err);
+      //console.log(docs);
+      var data = [];
+      docs.each(function(err, doc) {
+        if(doc) {
+          //console.log(doc);
+            data.push(doc);
+         }
+         else{
+             res.send({message:data});
+         }
+      })
+    });
+  });
+  
+router.get('/login', function(req,res,next){
 
+})
 
 
 
@@ -111,5 +129,10 @@ router.post('/login', (req, res) => {
 //         return token;
 //     })
 // }
+ //   var response = {
+        //         statusCode: 200,
+        //         headers:  { 'Content-Type': 'application/json' },
+        //         body: JSON.parse(doc)
+        //       }
 
 module.exports = router;

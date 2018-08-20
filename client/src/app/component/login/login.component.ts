@@ -1,10 +1,11 @@
 import { Component, OnInit } from '@angular/core';
 import { FormControl, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
-import {HttpClient, HttpErrorResponse } from '@angular/common/http';
+import { HttpClient, HttpErrorResponse } from '@angular/common/http';
 import { AppService } from '../../services/app.service';
 import { error } from 'util';
 import { AuthService } from '../../auth/auth.service';
+import { Message } from '../../Msg'
 
 @Component({
   selector: 'app-login',
@@ -13,6 +14,7 @@ import { AuthService } from '../../auth/auth.service';
 }) 
 export class LoginComponent implements OnInit {
   postdata: string;
+  message: Message[];
   
   constructor(private router: Router, private service: AppService, private auth: AuthService) {}
   
@@ -37,6 +39,7 @@ export class LoginComponent implements OnInit {
     this.service.postRequest(user, 'login').subscribe((data: any)  =>  {
       
       localStorage.setItem('token', data.token);
+      localStorage.setItem('email', data.email);
       //console.log(localStorage.getItem('token'));
       
       var a = (this.auth.isAuthenticated());
@@ -45,6 +48,11 @@ export class LoginComponent implements OnInit {
       if (data != 'undefined') {
         if (data.success) {
           //console.log(data.token);
+          //this.service.getRequest()
+        this.service.getRequest().subscribe((data: Message[]) => {
+          this.message = data;
+          console.log(this.message);
+        });
           this.router.navigate(['chatdash']);
         } else {
           alert(data.reason)
@@ -52,6 +60,7 @@ export class LoginComponent implements OnInit {
       }
     });
   }
+
 
   register() { 
     this.router.navigate(['registration']);
