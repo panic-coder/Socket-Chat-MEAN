@@ -27,7 +27,7 @@ export class ChatService {
   public getMessages = () => {
     return Observable.create((observer) => {
         this.socket.on('new-message', (message,email) => {
-          console.log(email);
+          //console.log(email);
             observer.next({"message":message,"email":email});
             //observer.next(email);
         });

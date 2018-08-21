@@ -10,6 +10,7 @@ import { AppRoutingModule } from './/app-routing.module';
 import { RegistrationComponent } from './component/registration/registration.component';
 import { ChatDashboardComponent } from './component/chat-dashboard/chat-dashboard.component';
 import { AppMaterialModule } from './app-material.module';
+import { AppService } from './services/app.service';
 import { ChatService } from './services/chat.service';
 
 
@@ -39,7 +40,7 @@ export function tokenGetter() {
   })
   ],
   
-  providers: [ChatService],
+  providers: [AppService,ChatService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

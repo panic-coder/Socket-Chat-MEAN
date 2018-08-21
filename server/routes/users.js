@@ -54,7 +54,7 @@ router.post('/login', (req, res) => {
                 };
                 var token = jwt.sign(
                     id, 'secretKey', {
-                        expiresIn: '1h'
+                        expiresIn: '5h'
                     });
     
                 res.send({

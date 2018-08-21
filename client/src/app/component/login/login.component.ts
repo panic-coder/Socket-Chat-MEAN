@@ -1,11 +1,12 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Input } from '@angular/core';
 import { FormControl, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { HttpClient, HttpErrorResponse } from '@angular/common/http';
 import { AppService } from '../../services/app.service';
 import { error } from 'util';
 import { AuthService } from '../../auth/auth.service';
-import { Message } from '../../Msg'
+import { Message } from '../../Msg';
+//import { CHAT } from '../chat-dashboard/chat-dashboard.component';
 
 @Component({
   selector: 'app-login',
@@ -13,9 +14,10 @@ import { Message } from '../../Msg'
   styleUrls: ['./login.component.css']
 }) 
 export class LoginComponent implements OnInit {
-  postdata: string;
-  message: Message[];
   
+  postdata: string;
+  message: Message[] ;
+    //messages = CHAT
   constructor(private router: Router, private service: AppService, private auth: AuthService) {}
   
   ngOnInit() {}
@@ -49,10 +51,7 @@ export class LoginComponent implements OnInit {
         if (data.success) {
           //console.log(data.token);
           //this.service.getRequest()
-        this.service.getRequest().subscribe((data: Message[]) => {
-          this.message = data;
-          console.log(this.message);
-        });
+        
           this.router.navigate(['chatdash']);
         } else {
           alert(data.reason)

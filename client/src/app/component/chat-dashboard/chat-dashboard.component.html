@@ -1,3 +1,5 @@
+
+
 <mat-toolbar>
     <mat-toolbar-row>
         <span>Chat</span>
@@ -5,12 +7,12 @@
         <button mat-button (click) = "signout()">Signout</button>
       </mat-toolbar-row>
 </mat-toolbar>
-<!-- <div *ngFor="let email of emails" >
-    {{email}}
-</div> -->
+<div *ngFor="let past of pastMessage" >
+    <div style="color:cornflowerblue; font-weight:bold;">{{past.email}}</div><div>{{past.message}}</div><br>
+</div>
 
 <div *ngFor="let message of messages" >
-     {{message}}
+     <div style="color:cornflowerblue; font-weight:bold;">{{message.email}}</div><div>{{message.message}}</div><br>
 </div>
 
 <!-- <input [(ngModel)]="message" (keyup)="$event.keyCode == 13 && sendMessage()"/> -->
