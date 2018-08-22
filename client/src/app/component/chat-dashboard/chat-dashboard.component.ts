@@ -43,14 +43,6 @@ export class ChatDashboardComponent implements OnInit {
     this.message = '';
   }
 
-  signout(){
-    localStorage.clear();
-    //console.log(localStorage.getItem('token'));
-    var a = this.auth.isAuthenticated();
-    console.log(a);
-    
-    this.router.navigate(['']);
-  }
 
   ngOnInit() {
     //console.log(this.messagesPast);

@@ -12,6 +12,7 @@ import { ChatDashboardComponent } from './component/chat-dashboard/chat-dashboar
 import { AppMaterialModule } from './app-material.module';
 import { AppService } from './services/app.service';
 import { ChatService } from './services/chat.service';
+import { HomeComponent } from './component/home/home.component';
 
 
 export function tokenGetter() {
@@ -23,7 +24,8 @@ export function tokenGetter() {
     AppComponent,
     LoginComponent,
     RegistrationComponent,
-    ChatDashboardComponent
+    ChatDashboardComponent,
+    HomeComponent
   ],
   imports: [
     BrowserModule,

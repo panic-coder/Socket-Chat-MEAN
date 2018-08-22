@@ -13,35 +13,8 @@ import 'rxjs/add/operator/do';
 export class AppService {
 
   constructor(private http: HttpClient) { }
-  //headers: HttpHeaders;
-  //options: RequestOptions;
   link = 'http://localhost:3000/';
   
-  //  httpOptions = {
-  //   headers: new HttpHeaders({ 'Content-Type': 'application/json' }),
-  //   observe: 'response' as 'response'
-  // };
-
-  // postRequest(user,url) {
-    
-  //    return this.http.post(this.link+url, user).subscribe(res => {
-  //      //console.log(res.headers.get('token-key-name'));
-  //     console.log('done');
-  //    }) 
-  // }
-
-  // public postRequest(user,url){
-  //   console.log(user);  
-  //   let headers = new HttpHeaders({'Content-Type' : 'application/json' });
-  //   let body = JSON.stringify(user);
-  //   // let options = new RequestOptions({headers: headers}); 
-  //   return this.http.post(this.link+url, body).map((res: Response) => res.json());
-  //   }
-
-  // posthttpdata(){
-  
-  // }
-
   postRequest(user,url){
     var reqHeader = new HttpHeaders({'Content-Type': 'application/json'});
     return this.http.post(this.link+url, user, {headers: reqHeader})
@@ -54,6 +27,16 @@ export class AppService {
 
   getEmail(){
     return this.http.get(this.link+'login');
+  }
+
+  postOnlineUsers(email){
+    var reqHeader = new HttpHeaders({'Content-Type': 'application/json'});
+    return this.http.post(this.link+'getOnline', email, {headers: reqHeader})
+  }
+
+  postOfflineUsers(email){
+    var reqHeader = new HttpHeaders({'Content-Type': 'application/json'});
+    return this.http.post(this.link+'getOffline', email, {headers: reqHeader})
   }
 
 }

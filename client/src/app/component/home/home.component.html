@@ -1,0 +1,14 @@
+<mat-toolbar >
+  <mat-toolbar-row >
+      <span>Chat</span>
+      <span class="spacer"></span>
+      <button mat-button (click) = "signout()">Signout</button>
+    </mat-toolbar-row>
+</mat-toolbar>
+<mat-sidenav-container class="example-container">
+  <mat-sidenav mode="side" opened ><div style="font-style:italic">Online Users</div>
+    <div *ngFor="let user of onUser"><div style="color:cornflowerblue; font-weight:bold;">
+      <div style="padding-right: 70px">{{user}}</div></div></div>
+  </mat-sidenav>
+  <mat-sidenav-content><app-chat-dashboard></app-chat-dashboard></mat-sidenav-content>
+</mat-sidenav-container>

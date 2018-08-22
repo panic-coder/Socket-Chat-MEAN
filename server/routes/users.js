@@ -14,6 +14,7 @@ var chat = require('../model/chat');
 mongoose.connect('mongodb://localhost:27017/chat', {useNewUrlParser: true}); 
 var db = mongoose.connection;
 
+
 router.post('/register', (req, res, next) => {
     var newUser = new User({
         email: req.body.email,
@@ -97,6 +98,26 @@ router.get("/chatdash", function(req, res, next) {
       })
     });
   });
+
+
+  var onUser = [];
+
+  router.post("/getOnline", function(req, res) {
+      //console.log(req.body.email);
+     if(onUser.indexOf(req.body.email) == -1)
+        onUser.push(req.body.email);
+        console.log(onUser);
+        res.send(onUser)
+  })
+
+  router.post("/getOffline", function(req, res) {
+      //console.log('off'+req.body.email);
+      var index = onUser.indexOf(req.body.email);
+      onUser.splice(index,1);
+      console.log(onUser);
+      res.send(onUser)
+      
+  })
   
 router.get('/login', function(req,res,next){
 

@@ -33,25 +33,35 @@ mongoose.connection.on('error', (err) => {
 app.use(cors());
 
 //app.use(express.static(Path.join(__dirname, 'public')));
-
+var onUser = [];
 var users = require('./routes/users');
-
+var onlineUsers = [];
 app.use(bodyParser.json());
 app.use('/', users);
 //chat.getTokenValue('eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjViNzY1ZDY5YjRiZGI4MWMzYjIyN2YxNSIsImlhdCI6MTUzNDczOTY3NiwiZXhwIjoxNTM0NzQzMjc2fQ.zDjio6gNgKDGI2bLeo3Ezr_3PWfk1CdFRJbBD_sTwRw');
 io.on('connection', function(socket){
     console.log('a user connected');
-    // socket.on('disconnect', function(){
-    //     console.log('a user disconnected');
-    // })
+    socket.on('disconnect', function(){
+        console.log('a user disconnected');
+    })
     socket.on('new-message', (message, token, email) => {
         console.log(message);
         console.log(token);
         console.log(email);
         
+        
         chat.getTokenValue(token,message);
         io.emit('new-message',message,email);
       });
+      socket.on('on-user', (user) => {
+          console.log(user);
+          
+        if(onUser.indexOf(user) == -1)
+            onUser.push(user);
+        console.log(onUser);
+        io.emit('on-user',onUser);
+        //res.send(onUser)
+      })
 })
 
 server.listen(3000, () => console.log('Connected'));

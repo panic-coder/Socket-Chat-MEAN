@@ -13,6 +13,8 @@ export class ChatService {
 
   constructor() {
     this.socket = io(this.url);
+    this.socket.emit('on-user',this.email);
+
     //this.socket.on('new-message', (message) => {
       //console.log(message);
   //});
@@ -32,6 +34,17 @@ export class ChatService {
             //observer.next(email);
         });
     });
+  }
+
+  public sendOnline(){
+  }
+
+  public getOnline = () => {
+    return Observable.create((observer) => {
+      this.socket.on('on-user', (user) => {
+        observer.next(user);
+      })
+    })
   }
 
 

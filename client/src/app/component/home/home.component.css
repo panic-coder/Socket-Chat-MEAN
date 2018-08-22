@@ -1,0 +1,15 @@
+.spacer {
+    flex: 1 1 auto;
+  }
+  .example-container {
+    margin-left:80px;
+    margin-right:10px;
+    position: absolute;
+    max-width: 100%;
+    top: 80px;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    /* background: #eee; */
+  }
+  

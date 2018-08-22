@@ -1,12 +1,7 @@
 
+<div class="chat">
 
-<mat-toolbar>
-    <mat-toolbar-row>
-        <span>Chat</span>
-        <span class="spacer"></span>
-        <button mat-button (click) = "signout()">Signout</button>
-      </mat-toolbar-row>
-</mat-toolbar>
+<div class="pages">
 <div *ngFor="let past of pastMessage" >
     <div style="color:cornflowerblue; font-weight:bold;">{{past.email}}</div><div>{{past.message}}</div><br>
 </div>
@@ -14,18 +9,20 @@
 <div *ngFor="let message of messages" >
      <div style="color:cornflowerblue; font-weight:bold;">{{message.email}}</div><div>{{message.message}}</div><br>
 </div>
-
+</div>
 <!-- <input [(ngModel)]="message" (keyup)="$event.keyCode == 13 && sendMessage()"/> -->
 <!-- <button (click)="sendMessage()">Send</button> -->
 
 <form class="form" >
 
-    <mat-form-field class="width">
+    <mat-form-field class="width"> 
       <input matInput #message1 maxlength="256" placeholder="Message" [(ngModel)]="message" name="something" [ngModelOptions] = "{staandalone: true}">
       <!-- <mat-hint align="start"><strong>Don't disclose personal info</strong> </mat-hint> -->
       <mat-hint align="end">{{message1.value.length}} / 256</mat-hint>
+      <button mat-raised-button id="buttonAlign" (click)="sendMessage()">Send</button>
     </mat-form-field>
-    <button mat-raised-button  (click)="sendMessage()">Send</button>
+    
 
 </form>
 
+</div>
