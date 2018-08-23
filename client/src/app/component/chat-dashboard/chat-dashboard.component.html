@@ -10,7 +10,7 @@
 </div>
 </div>
 
-<form class="form" >
+<form class="form">
     <mat-form-field class="width"> 
       <input matInput #message1 maxlength="256" placeholder="Message" [(ngModel)]="message" name="something" [ngModelOptions] = "{staandalone: true}">
       <mat-hint align="end">{{message1.value.length}} / 256</mat-hint>

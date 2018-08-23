@@ -4,12 +4,10 @@
 }
 
 .form {
-  position: absolute;
-  bottom: 0;
   min-width: 150px;
   max-width:100%;
   width: 80%;
-  bottom: 20px;
+  bottom: 20px; 
 } 
 
 .width {
