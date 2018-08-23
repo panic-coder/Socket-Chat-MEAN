@@ -13,30 +13,24 @@ import 'rxjs/add/operator/do';
 export class AppService {
 
   constructor(private http: HttpClient) { }
-  link = 'http://localhost:3000/';
+
+  link = 'http://localhost:3000/'; // link of backend server
   
+  /**
+   * Post request for the given relative url 
+   * @param user 
+   * @param url 
+   */
   postRequest(user,url){
     var reqHeader = new HttpHeaders({'Content-Type': 'application/json'});
     return this.http.post(this.link+url, user, {headers: reqHeader})
    
   }
-
+  /**
+   * Get request for getting the old messages
+   */
   getRequest(){
       return this.http.get(this.link+'chatdash');
   }
-
-  getEmail(){
-    return this.http.get(this.link+'login');
-  }
-
-  postOnlineUsers(email){
-    var reqHeader = new HttpHeaders({'Content-Type': 'application/json'});
-    return this.http.post(this.link+'getOnline', email, {headers: reqHeader})
-  }
-
-  postOfflineUsers(email){
-    var reqHeader = new HttpHeaders({'Content-Type': 'application/json'});
-    return this.http.post(this.link+'getOffline', email, {headers: reqHeader})
-  }
-
+  
 }

@@ -16,52 +16,63 @@ export class RegistrationComponent implements OnInit {
   ngOnInit() {
   }
 
-  email = new FormControl('', [Validators.required, Validators.email]);
-  password = new FormControl('', [Validators.required, Validators.minLength(6)]);
-  repeatPassword = new FormControl('', [Validators.required, Validators.minLength(6)]);
+  email = new FormControl('', [Validators.required, Validators.email]); //Email validation
+  password = new FormControl('', [Validators.required, Validators.minLength(6)]); //Password validation
+  repeatPassword = new FormControl('', [Validators.required, Validators.minLength(6)]); //repeat password validation
 
+  /**
+   * Getting email error message
+   */
   getErrorMessage() {
     return this.email.hasError('required') ? 'You must enter a value' :
       this.email.hasError('email') ? 'Not a valid email' :
         '';
   }
+
+  /**
+   * Getting password error message
+   */
   getPasswordErrorMessage() {
     return this.password.hasError('required') ? "Can't be empty" :
       this.password.hasError('minlength') ? 'Minimum 6 characters' : 
         '';
   }
 
+  /**
+   * Getting confirm password error message
+   */
   getPasswordMatch() {
       return this.repeatPassword.hasError('required') ? "'Can't be empty" :
         this.repeatPassword.hasError('minlength') ? 'Minimum 6 characters' :
          '';
   }
 
+  /**
+   * Getting values and sending it to backend
+   * @param email 
+   * @param password 
+   * @param repeatPassword 
+   */
   getValues(email, password, repeatPassword){
     console.log(email+" "+password+" "+repeatPassword);
     var user = {
       "email":email,
       "password":password
     }
-    //var data = JSON.stringify(user);
     console.log(user);
     
     if(password == repeatPassword){
-      //console.log('Success');
       this.service.postRequest(user,'register').subscribe((data:any) => {
         console.log(data);
-        
         if(data.success){
           this.router.navigate(['']);
         } else {
           alert('Something went wrong');
         }
       })
-      
     } else {
         alert('Failed to match password ')
     }
-    
    }
 
 }

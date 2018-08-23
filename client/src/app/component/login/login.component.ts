@@ -6,8 +6,6 @@ import { AppService } from '../../services/app.service';
 import { error } from 'util';
 import { AuthService } from '../../auth/auth.service';
 import { Message } from '../../Msg';
-//import { CHAT } from '../chat-dashboard/chat-dashboard.component';
-import { DataShareService } from '../../services/data-share.service';
 
 @Component({
   selector: 'app-login',
@@ -20,50 +18,53 @@ export class LoginComponent implements OnInit {
   message: Message[] ;
   public data = [] ;
 
-    //messages = CHAT
-  constructor(private router: Router, private service: AppService, private auth: AuthService, private dataShare: DataShareService) {
-    //this.dataShare.myMethod(this.data);
-
-  }
+  constructor(private router: Router, private service: AppService, private auth: AuthService) { }
   
   ngOnInit() {}
   
-  hide = true;email = new FormControl('', [Validators.required, Validators.email]);password = new FormControl('', [Validators.required, Validators.minLength(6)]);getErrorMessage() {
+  hide = true; //Hide and show password
+
+  email = new FormControl('', [Validators.required, Validators.email]); // email validation
+
+  /**
+   * Password validation
+   */
+  password = new FormControl('', [Validators.required, Validators.minLength(6)]);
+  
+  /**
+   * Gets mail error message
+   */
+  getErrorMessage() {
     return this.email.hasError('required') ?
       'You must enter a value' : this.email.hasError('email') ? 'Not a valid email' : '';
   }
   
+  /**
+   * Gets password error message
+   */
   getPasswordErrorMessage() {
     return this.password.hasError('required') ? "Can't be empty" : this.password.hasError('minlength') ? 'Wrong password' : '';
-    
   }
   
+  /**
+   * Login after validating the data and checking the database whether the user exists or not
+   * @param email 
+   * @param password 
+   */
   secureLogin(email, password) {
     var user = {
       "email": email,
       "password": password
-    } //var stringData = JSON.stringify(user); console.log(user);
+    }
     
     this.service.postRequest(user, 'login').subscribe((data: any)  =>  {
-      
       localStorage.setItem('token', data.token);
       localStorage.setItem('email', data.email);
       this.usersOnline = localStorage.getItem('email');
       this.data.push(this.usersOnline);
-      //this.data.unshift(localStorage.getItem('email'));
-      //this.usersOnline.push(data.email);
-      //localStorage.setItem('online', this.usersOnline);
-      //console.log(localStorage.getItem('token'));
-      console.log(this.data);
-      
       var a = (this.auth.isAuthenticated());
-      console.log(a);
-      
       if (data != 'undefined') {
         if (data.success) {
-          //console.log(data.token);
-          //this.service.getRequest()
-        
           this.router.navigate(['app-home']);
         } else {
           alert(data.reason)
@@ -72,8 +73,9 @@ export class LoginComponent implements OnInit {
     });
   }
 
-  
-
+/**
+ * Goes to registration page
+ */
   register() { 
     this.router.navigate(['registration']);
   }

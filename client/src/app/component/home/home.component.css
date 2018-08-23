@@ -1,7 +1,7 @@
 .spacer {
     flex: 1 1 auto;
   }
-  .example-container {
+  .container {
     margin-left:80px;
     margin-right:10px;
     position: absolute;
@@ -10,6 +10,5 @@
     bottom: 0;
     left: 0;
     right: 0;
-    /* background: #eee; */
   }
   

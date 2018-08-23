@@ -12,11 +12,12 @@ import { ChatService } from '../../services/chat.service';
 })
 export class HomeComponent implements OnInit {
 
-  onUser = [];
+  onUser = []; //Array where online users are being saved
 
-  constructor(private router: Router, private auth: AuthService, private service: AppService, private chatService: ChatService) { 
-
-  }
+  constructor(private router: Router, private auth: AuthService, private service: AppService, private chatService: ChatService) { }
+  /**
+   * init for gettting the online users
+   */
   ngOnInit() {
     this.onUser = [];
     var email = localStorage.getItem('email');
@@ -27,12 +28,13 @@ export class HomeComponent implements OnInit {
             this.onUser.splice(i,1);
           }
         }
-        
     })
-    
   }
+
+  /**
+   * Removing the token from localstorage as user signout and removing it from the online users array
+   */
   signout(){
-    
     localStorage.removeItem('token');
     var email = localStorage.getItem('email')
     for(var i=0;i<this.onUser.length;i++){
@@ -40,14 +42,9 @@ export class HomeComponent implements OnInit {
         this.onUser.splice(i,1);
       }
     }
-   
     localStorage.removeItem('email');
-  
     var a = this.auth.isAuthenticated();
-    console.log(a);
-    
     this.router.navigate(['']);
   }
-
 
 }

@@ -4,5 +4,6 @@ export interface Message {
     timeStamp: Date,
     id: String,
     message: String,
+    email:String,
     _v:String
 }

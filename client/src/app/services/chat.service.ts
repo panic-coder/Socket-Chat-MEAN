@@ -8,37 +8,39 @@ import { Observable } from 'rxjs/Observable';
 })
 export class ChatService {
 
-  private url = 'http://localhost:3000';
+  private url = 'http://localhost:3000'; //Backend server url
   private socket;
 
   constructor() {
     this.socket = io(this.url);
     this.socket.emit('on-user',this.email);
-
-    //this.socket.on('new-message', (message) => {
-      //console.log(message);
-  //});
    }
   
   email = localStorage.getItem('email');
 
+  /**
+   * 
+   * @param message Sending message to backend via socket
+   * @param token 
+   */
   public sendMessage(message, token) {
     this.socket.emit('new-message', message, token, this.email);
   } 
 
+  /**
+   * Getting broadcasted message from server via socket
+   */
   public getMessages = () => {
     return Observable.create((observer) => {
         this.socket.on('new-message', (message,email) => {
-          //console.log(email);
             observer.next({"message":message,"email":email});
-            //observer.next(email);
         });
     });
   }
 
-  public sendOnline(){
-  }
-
+  /**
+   * Getting broadcasted online user via socket
+   */
   public getOnline = () => {
     return Observable.create((observer) => {
       this.socket.on('on-user', (user) => {
@@ -46,10 +48,5 @@ export class ChatService {
       })
     })
   }
-
-
-  // public getOldMessages = () => {
-  //   return Observable.create
-  // }
 
 }
